@@ -1,0 +1,24 @@
+{
+  "type": "EI-MS",
+  "source": "generated from compounds.json peak list",
+  "source_url": "",
+  "x_unit": "m/z",
+  "y_unit": "relative intensity",
+  "data": [
+    {
+      "x": 32,
+      "y": 70,
+      "assignment": "分子イオン M⁺"
+    },
+    {
+      "x": 31,
+      "y": 100,
+      "assignment": "CH2OH⁺"
+    },
+    {
+      "x": 29,
+      "y": 20,
+      "assignment": "CHO⁺"
+    }
+  ]
+}

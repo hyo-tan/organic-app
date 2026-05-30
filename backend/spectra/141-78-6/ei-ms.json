@@ -1,0 +1,34 @@
+{
+  "type": "EI-MS",
+  "source": "generated from compounds.json peak list",
+  "source_url": "",
+  "x_unit": "m/z",
+  "y_unit": "relative intensity",
+  "data": [
+    {
+      "x": 88,
+      "y": 10,
+      "assignment": "分子イオン M⁺"
+    },
+    {
+      "x": 43,
+      "y": 100,
+      "assignment": "CH3CO⁺"
+    },
+    {
+      "x": 61,
+      "y": 35,
+      "assignment": "フラグメントイオン"
+    },
+    {
+      "x": 45,
+      "y": 25,
+      "assignment": "C2H5O⁺"
+    },
+    {
+      "x": 29,
+      "y": 20,
+      "assignment": "C2H5⁺"
+    }
+  ]
+}

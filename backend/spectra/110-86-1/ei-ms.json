@@ -1,0 +1,24 @@
+{
+  "type": "EI-MS",
+  "source": "generated from compounds.json peak list",
+  "source_url": "",
+  "x_unit": "m/z",
+  "y_unit": "relative intensity",
+  "data": [
+    {
+      "x": 79,
+      "y": 100,
+      "assignment": "分子イオン M⁺"
+    },
+    {
+      "x": 52,
+      "y": 30,
+      "assignment": "フラグメントイオン"
+    },
+    {
+      "x": 51,
+      "y": 25,
+      "assignment": "フラグメントイオン"
+    }
+  ]
+}

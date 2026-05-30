@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* --- レイアウトのベース設定 --- */
+.app-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+.compound-sidebar {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+
+.compound-sidebar-button {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.55rem;
+}
+
+/* --- レスポンシブ対応（メディアクエリは外に出す） --- */
+@media (max-width: 1100px) {
+  .app-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .compound-sidebar {
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 640px) {
+  main {
+    padding: 12px !important;
+  }
+
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  h2 {
+    font-size: 1.35rem !important;
+  }
+
+  p {
+    line-height: 1.7;
+  }
+
+  input {
+    width: 100% !important;
+    font-size: 1rem !important;
+  }
+
+  button {
+    max-width: 100%;
+  }
+
+  .js-plotly-plot,
+  .plot-container {
+    max-width: 100% !important;
+  }
+}

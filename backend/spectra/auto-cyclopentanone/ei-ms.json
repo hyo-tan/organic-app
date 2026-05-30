@@ -1,0 +1,24 @@
+{
+  "type": "EI-MS",
+  "source": "generated from compounds.json peak list",
+  "source_url": "",
+  "x_unit": "m/z",
+  "y_unit": "relative intensity",
+  "data": [
+    {
+      "x": 29,
+      "y": 35,
+      "assignment": "小フラグメント"
+    },
+    {
+      "x": 43,
+      "y": 100,
+      "assignment": "アシリウムイオン候補 RCO⁺"
+    },
+    {
+      "x": 84,
+      "y": 30,
+      "assignment": "分子イオン M⁺"
+    }
+  ]
+}

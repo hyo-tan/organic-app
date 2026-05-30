@@ -1,0 +1,1269 @@
+[
+  {
+    "name_ja": "酢酸エチル",
+    "name_en": "ethyl acetate",
+    "iupac_name": "ethyl ethanoate",
+    "cas": "141-78-6",
+    "formula": "C4H8O2",
+    "mw": 88.11,
+    "smiles": "CCOC(=O)C",
+    "melting_point": "-83.6 °C",
+    "boiling_point": "77.1 °C",
+    "density": "0.902 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "2980 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "1740 cm⁻¹",
+        "assignment": "エステル C=O 伸縮"
+      },
+      {
+        "wavenumber": "1240 cm⁻¹",
+        "assignment": "C-O 伸縮"
+      },
+      {
+        "wavenumber": "1050 cm⁻¹",
+        "assignment": "C-O 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 88,
+        "intensity": 10,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 43,
+        "intensity": 100,
+        "assignment": "CH3CO⁺"
+      },
+      {
+        "mz": 61,
+        "intensity": 35,
+        "assignment": "フラグメントイオン"
+      },
+      {
+        "mz": 45,
+        "intensity": 25,
+        "assignment": "C2H5O⁺"
+      },
+      {
+        "mz": 29,
+        "intensity": 20,
+        "assignment": "C2H5⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "4.12 ppm",
+        "multiplicity": "q",
+        "integration": "2H",
+        "assignment": "OCH2"
+      },
+      {
+        "shift": "2.05 ppm",
+        "multiplicity": "s",
+        "integration": "3H",
+        "assignment": "COCH3"
+      },
+      {
+        "shift": "1.25 ppm",
+        "multiplicity": "t",
+        "integration": "3H",
+        "assignment": "CH3"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "170.9 ppm",
+        "assignment": "C=O"
+      },
+      {
+        "shift": "60.4 ppm",
+        "assignment": "OCH2"
+      },
+      {
+        "shift": "21.0 ppm",
+        "assignment": "COCH3"
+      },
+      {
+        "shift": "14.2 ppm",
+        "assignment": "CH3"
+      }
+    ]
+  },
+  {
+    "name_ja": "アセトン",
+    "name_en": "acetone",
+    "iupac_name": "propan-2-one",
+    "cas": "67-64-1",
+    "formula": "C3H6O",
+    "mw": 58.08,
+    "smiles": "CC(=O)C",
+    "melting_point": "-94.7 °C",
+    "boiling_point": "56.1 °C",
+    "density": "0.785 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "2960 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "1715 cm⁻¹",
+        "assignment": "ケトン C=O 伸縮"
+      },
+      {
+        "wavenumber": "1360 cm⁻¹",
+        "assignment": "CH3 変角"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 58,
+        "intensity": 25,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 43,
+        "intensity": 100,
+        "assignment": "CH3CO⁺"
+      },
+      {
+        "mz": 15,
+        "intensity": 15,
+        "assignment": "CH3⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "2.17 ppm",
+        "multiplicity": "s",
+        "integration": "6H",
+        "assignment": "COCH3"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "206.0 ppm",
+        "assignment": "C=O"
+      },
+      {
+        "shift": "30.0 ppm",
+        "assignment": "CH3"
+      }
+    ]
+  },
+  {
+    "name_ja": "エタノール",
+    "name_en": "ethanol",
+    "iupac_name": "ethanol",
+    "cas": "64-17-5",
+    "formula": "C2H6O",
+    "mw": 46.07,
+    "smiles": "CCO",
+    "melting_point": "-114.1 °C",
+    "boiling_point": "78.4 °C",
+    "density": "0.789 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "3200-3600 cm⁻¹",
+        "assignment": "O-H 伸縮"
+      },
+      {
+        "wavenumber": "2970 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "1050 cm⁻¹",
+        "assignment": "C-O 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 46,
+        "intensity": 20,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 31,
+        "intensity": 100,
+        "assignment": "CH2OH⁺"
+      },
+      {
+        "mz": 45,
+        "intensity": 35,
+        "assignment": "M-H⁺"
+      },
+      {
+        "mz": 29,
+        "intensity": 20,
+        "assignment": "C2H5⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "3.65 ppm",
+        "multiplicity": "q",
+        "integration": "2H",
+        "assignment": "CH2O"
+      },
+      {
+        "shift": "1.20 ppm",
+        "multiplicity": "t",
+        "integration": "3H",
+        "assignment": "CH3"
+      },
+      {
+        "shift": "1-5 ppm",
+        "multiplicity": "br",
+        "integration": "1H",
+        "assignment": "OH"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "58.0 ppm",
+        "assignment": "CH2O"
+      },
+      {
+        "shift": "18.0 ppm",
+        "assignment": "CH3"
+      }
+    ]
+  },
+  {
+    "name_ja": "トルエン",
+    "name_en": "toluene",
+    "iupac_name": "methylbenzene",
+    "cas": "108-88-3",
+    "formula": "C7H8",
+    "mw": 92.14,
+    "smiles": "Cc1ccccc1",
+    "melting_point": "-95.0 °C",
+    "boiling_point": "110.6 °C",
+    "density": "0.867 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "3030 cm⁻¹",
+        "assignment": "芳香族 C-H 伸縮"
+      },
+      {
+        "wavenumber": "2920 cm⁻¹",
+        "assignment": "アルキル C-H 伸縮"
+      },
+      {
+        "wavenumber": "1600 cm⁻¹",
+        "assignment": "芳香環 C=C 伸縮"
+      },
+      {
+        "wavenumber": "730 cm⁻¹",
+        "assignment": "芳香族 C-H 面外変角"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 92,
+        "intensity": 70,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 91,
+        "intensity": 100,
+        "assignment": "トロピリウムイオン C7H7⁺"
+      },
+      {
+        "mz": 65,
+        "intensity": 20,
+        "assignment": "フラグメントイオン"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "7.10-7.30 ppm",
+        "multiplicity": "m",
+        "integration": "5H",
+        "assignment": "芳香族H"
+      },
+      {
+        "shift": "2.34 ppm",
+        "multiplicity": "s",
+        "integration": "3H",
+        "assignment": "Ar-CH3"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "137 ppm",
+        "assignment": "ipso C"
+      },
+      {
+        "shift": "129 ppm",
+        "assignment": "芳香族C"
+      },
+      {
+        "shift": "128 ppm",
+        "assignment": "芳香族C"
+      },
+      {
+        "shift": "125 ppm",
+        "assignment": "芳香族C"
+      },
+      {
+        "shift": "21 ppm",
+        "assignment": "CH3"
+      }
+    ]
+  },
+  {
+    "name_ja": "ベンゼン",
+    "name_en": "benzene",
+    "iupac_name": "benzene",
+    "cas": "71-43-2",
+    "formula": "C6H6",
+    "mw": 78.11,
+    "smiles": "c1ccccc1",
+    "melting_point": "5.5 °C",
+    "boiling_point": "80.1 °C",
+    "density": "0.879 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "3030 cm⁻¹",
+        "assignment": "芳香族 C-H 伸縮"
+      },
+      {
+        "wavenumber": "1600 cm⁻¹",
+        "assignment": "芳香環 C=C 伸縮"
+      },
+      {
+        "wavenumber": "690 cm⁻¹",
+        "assignment": "芳香族 C-H 面外変角"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 78,
+        "intensity": 100,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 77,
+        "intensity": 20,
+        "assignment": "C6H5⁺"
+      },
+      {
+        "mz": 51,
+        "intensity": 15,
+        "assignment": "フラグメントイオン"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "7.26 ppm",
+        "multiplicity": "s",
+        "integration": "6H",
+        "assignment": "芳香族H"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "128.0 ppm",
+        "assignment": "芳香族C"
+      }
+    ]
+  },
+  {
+    "name_ja": "メタノール",
+    "name_en": "methanol",
+    "iupac_name": "methanol",
+    "cas": "67-56-1",
+    "formula": "CH4O",
+    "mw": 32.04,
+    "smiles": "CO",
+    "melting_point": "-97.6 °C",
+    "boiling_point": "64.7 °C",
+    "density": "0.792 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "3200-3600 cm⁻¹",
+        "assignment": "O-H 伸縮"
+      },
+      {
+        "wavenumber": "2940 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "1030 cm⁻¹",
+        "assignment": "C-O 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 32,
+        "intensity": 70,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 31,
+        "intensity": 100,
+        "assignment": "CH2OH⁺"
+      },
+      {
+        "mz": 29,
+        "intensity": 20,
+        "assignment": "CHO⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "3.35 ppm",
+        "multiplicity": "s",
+        "integration": "3H",
+        "assignment": "CH3O"
+      },
+      {
+        "shift": "1-5 ppm",
+        "multiplicity": "br",
+        "integration": "1H",
+        "assignment": "OH"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "49.0 ppm",
+        "assignment": "CH3O"
+      }
+    ]
+  },
+  {
+    "name_ja": "ジエチルエーテル",
+    "name_en": "diethyl ether",
+    "iupac_name": "ethoxyethane",
+    "cas": "60-29-7",
+    "formula": "C4H10O",
+    "mw": 74.12,
+    "smiles": "CCOCC",
+    "melting_point": "-116.3 °C",
+    "boiling_point": "34.6 °C",
+    "density": "0.713 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "2970 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "1120 cm⁻¹",
+        "assignment": "C-O-C 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 74,
+        "intensity": 20,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 59,
+        "intensity": 100,
+        "assignment": "C3H7O⁺"
+      },
+      {
+        "mz": 45,
+        "intensity": 45,
+        "assignment": "C2H5O⁺"
+      },
+      {
+        "mz": 31,
+        "intensity": 30,
+        "assignment": "CH3O⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "3.45 ppm",
+        "multiplicity": "q",
+        "integration": "4H",
+        "assignment": "OCH2"
+      },
+      {
+        "shift": "1.20 ppm",
+        "multiplicity": "t",
+        "integration": "6H",
+        "assignment": "CH3"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "66 ppm",
+        "assignment": "OCH2"
+      },
+      {
+        "shift": "15 ppm",
+        "assignment": "CH3"
+      }
+    ]
+  },
+  {
+    "name_ja": "酢酸",
+    "name_en": "acetic acid",
+    "iupac_name": "ethanoic acid",
+    "cas": "64-19-7",
+    "formula": "C2H4O2",
+    "mw": 60.05,
+    "smiles": "CC(=O)O",
+    "melting_point": "16.6 °C",
+    "boiling_point": "118.1 °C",
+    "density": "1.049 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "2500-3300 cm⁻¹",
+        "assignment": "カルボン酸 O-H 伸縮"
+      },
+      {
+        "wavenumber": "1710 cm⁻¹",
+        "assignment": "C=O 伸縮"
+      },
+      {
+        "wavenumber": "1290 cm⁻¹",
+        "assignment": "C-O 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 60,
+        "intensity": 45,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 43,
+        "intensity": 100,
+        "assignment": "CH3CO⁺"
+      },
+      {
+        "mz": 45,
+        "intensity": 40,
+        "assignment": "COOH⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "10-12 ppm",
+        "multiplicity": "br",
+        "integration": "1H",
+        "assignment": "COOH"
+      },
+      {
+        "shift": "2.10 ppm",
+        "multiplicity": "s",
+        "integration": "3H",
+        "assignment": "CH3"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "178 ppm",
+        "assignment": "C=O"
+      },
+      {
+        "shift": "20 ppm",
+        "assignment": "CH3"
+      }
+    ]
+  },
+  {
+    "name_ja": "フェノール",
+    "name_en": "phenol",
+    "iupac_name": "phenol",
+    "cas": "108-95-2",
+    "formula": "C6H6O",
+    "mw": 94.11,
+    "smiles": "Oc1ccccc1",
+    "melting_point": "40.5 °C",
+    "boiling_point": "181.7 °C",
+    "density": "1.07 g/cm3",
+    "state": "固体",
+    "ir_peaks": [
+      {
+        "wavenumber": "3200-3600 cm⁻¹",
+        "assignment": "O-H 伸縮"
+      },
+      {
+        "wavenumber": "3030 cm⁻¹",
+        "assignment": "芳香族 C-H 伸縮"
+      },
+      {
+        "wavenumber": "1600 cm⁻¹",
+        "assignment": "芳香環 C=C 伸縮"
+      },
+      {
+        "wavenumber": "1220 cm⁻¹",
+        "assignment": "C-O 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 94,
+        "intensity": 100,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 66,
+        "intensity": 35,
+        "assignment": "フラグメントイオン"
+      },
+      {
+        "mz": 65,
+        "intensity": 25,
+        "assignment": "C5H5⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "6.70-7.30 ppm",
+        "multiplicity": "m",
+        "integration": "5H",
+        "assignment": "芳香族H"
+      },
+      {
+        "shift": "4-7 ppm",
+        "multiplicity": "br",
+        "integration": "1H",
+        "assignment": "OH"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "155 ppm",
+        "assignment": "C-O"
+      },
+      {
+        "shift": "129 ppm",
+        "assignment": "芳香族C"
+      },
+      {
+        "shift": "121 ppm",
+        "assignment": "芳香族C"
+      },
+      {
+        "shift": "116 ppm",
+        "assignment": "芳香族C"
+      }
+    ]
+  },
+  {
+    "name_ja": "アニリン",
+    "name_en": "aniline",
+    "iupac_name": "benzenamine",
+    "cas": "62-53-3",
+    "formula": "C6H7N",
+    "mw": 93.13,
+    "smiles": "Nc1ccccc1",
+    "melting_point": "-6.3 °C",
+    "boiling_point": "184.1 °C",
+    "density": "1.02 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "3300-3500 cm⁻¹",
+        "assignment": "N-H 伸縮"
+      },
+      {
+        "wavenumber": "3030 cm⁻¹",
+        "assignment": "芳香族 C-H 伸縮"
+      },
+      {
+        "wavenumber": "1600 cm⁻¹",
+        "assignment": "芳香環 C=C 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 93,
+        "intensity": 100,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 66,
+        "intensity": 35,
+        "assignment": "フラグメントイオン"
+      },
+      {
+        "mz": 65,
+        "intensity": 30,
+        "assignment": "C5H5⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "6.60-7.20 ppm",
+        "multiplicity": "m",
+        "integration": "5H",
+        "assignment": "芳香族H"
+      },
+      {
+        "shift": "3.5-4.5 ppm",
+        "multiplicity": "br",
+        "integration": "2H",
+        "assignment": "NH2"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "146 ppm",
+        "assignment": "C-N"
+      },
+      {
+        "shift": "129 ppm",
+        "assignment": "芳香族C"
+      },
+      {
+        "shift": "118 ppm",
+        "assignment": "芳香族C"
+      },
+      {
+        "shift": "115 ppm",
+        "assignment": "芳香族C"
+      }
+    ]
+  },
+  {
+    "name_ja": "安息香酸",
+    "name_en": "benzoic acid",
+    "iupac_name": "benzoic acid",
+    "cas": "65-85-0",
+    "formula": "C7H6O2",
+    "mw": 122.12,
+    "smiles": "O=C(O)c1ccccc1",
+    "melting_point": "122.4 °C",
+    "boiling_point": "249.2 °C",
+    "density": "1.27 g/cm3",
+    "state": "固体",
+    "ir_peaks": [
+      {
+        "wavenumber": "2500-3300 cm⁻¹",
+        "assignment": "カルボン酸 O-H 伸縮"
+      },
+      {
+        "wavenumber": "1685-1710 cm⁻¹",
+        "assignment": "C=O 伸縮"
+      },
+      {
+        "wavenumber": "1600 cm⁻¹",
+        "assignment": "芳香環 C=C 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 122,
+        "intensity": 80,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 105,
+        "intensity": 100,
+        "assignment": "C6H5CO⁺"
+      },
+      {
+        "mz": 77,
+        "intensity": 50,
+        "assignment": "C6H5⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "12-13 ppm",
+        "multiplicity": "br",
+        "integration": "1H",
+        "assignment": "COOH"
+      },
+      {
+        "shift": "7.40-8.20 ppm",
+        "multiplicity": "m",
+        "integration": "5H",
+        "assignment": "芳香族H"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "172 ppm",
+        "assignment": "C=O"
+      },
+      {
+        "shift": "134 ppm",
+        "assignment": "ipso C"
+      },
+      {
+        "shift": "130 ppm",
+        "assignment": "芳香族C"
+      },
+      {
+        "shift": "129 ppm",
+        "assignment": "芳香族C"
+      },
+      {
+        "shift": "128 ppm",
+        "assignment": "芳香族C"
+      }
+    ]
+  },
+  {
+    "name_ja": "ヘキサン",
+    "name_en": "hexane",
+    "iupac_name": "hexane",
+    "cas": "110-54-3",
+    "formula": "C6H14",
+    "mw": 86.18,
+    "smiles": "CCCCCC",
+    "melting_point": "-95.0 °C",
+    "boiling_point": "68.7 °C",
+    "density": "0.659 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "2960 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "2870 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "1460 cm⁻¹",
+        "assignment": "CH2 変角"
+      },
+      {
+        "wavenumber": "720 cm⁻¹",
+        "assignment": "長鎖アルカン CH2 rocking"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 86,
+        "intensity": 10,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 57,
+        "intensity": 100,
+        "assignment": "C4H9⁺"
+      },
+      {
+        "mz": 43,
+        "intensity": 80,
+        "assignment": "C3H7⁺"
+      },
+      {
+        "mz": 29,
+        "intensity": 45,
+        "assignment": "C2H5⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "1.25 ppm",
+        "multiplicity": "m",
+        "integration": "8H",
+        "assignment": "CH2"
+      },
+      {
+        "shift": "0.88 ppm",
+        "multiplicity": "t",
+        "integration": "6H",
+        "assignment": "末端CH3"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "31.7 ppm",
+        "assignment": "CH2"
+      },
+      {
+        "shift": "22.7 ppm",
+        "assignment": "CH2"
+      },
+      {
+        "shift": "14.1 ppm",
+        "assignment": "CH3"
+      }
+    ]
+  },
+  {
+    "name_ja": "シクロヘキサン",
+    "name_en": "cyclohexane",
+    "iupac_name": "cyclohexane",
+    "cas": "110-82-7",
+    "formula": "C6H12",
+    "mw": 84.16,
+    "smiles": "C1CCCCC1",
+    "melting_point": "6.5 °C",
+    "boiling_point": "80.7 °C",
+    "density": "0.779 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "2930 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "2850 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "1450 cm⁻¹",
+        "assignment": "CH2 変角"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 84,
+        "intensity": 40,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 56,
+        "intensity": 100,
+        "assignment": "C4H8⁺"
+      },
+      {
+        "mz": 41,
+        "intensity": 60,
+        "assignment": "C3H5⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "1.40 ppm",
+        "multiplicity": "br",
+        "integration": "12H",
+        "assignment": "CH2"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "27 ppm",
+        "assignment": "CH2"
+      }
+    ]
+  },
+  {
+    "name_ja": "クロロホルム",
+    "name_en": "chloroform",
+    "iupac_name": "trichloromethane",
+    "cas": "67-66-3",
+    "formula": "CHCl3",
+    "mw": 119.38,
+    "smiles": "ClC(Cl)Cl",
+    "melting_point": "-63.5 °C",
+    "boiling_point": "61.2 °C",
+    "density": "1.489 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "3020 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "760 cm⁻¹",
+        "assignment": "C-Cl 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 118,
+        "intensity": 60,
+        "assignment": "分子イオン関連ピーク"
+      },
+      {
+        "mz": 83,
+        "intensity": 100,
+        "assignment": "CHCl2⁺"
+      },
+      {
+        "mz": 47,
+        "intensity": 35,
+        "assignment": "CCl⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "7.26 ppm",
+        "multiplicity": "s",
+        "integration": "1H",
+        "assignment": "CHCl3"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "77 ppm",
+        "assignment": "CHCl3"
+      }
+    ]
+  },
+  {
+    "name_ja": "ジクロロメタン",
+    "name_en": "dichloromethane",
+    "iupac_name": "dichloromethane",
+    "cas": "75-09-2",
+    "formula": "CH2Cl2",
+    "mw": 84.93,
+    "smiles": "ClCCl",
+    "melting_point": "-96.7 °C",
+    "boiling_point": "39.6 °C",
+    "density": "1.326 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "2990 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "1260 cm⁻¹",
+        "assignment": "CH2 変角"
+      },
+      {
+        "wavenumber": "730 cm⁻¹",
+        "assignment": "C-Cl 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 84,
+        "intensity": 60,
+        "assignment": "分子イオン関連ピーク"
+      },
+      {
+        "mz": 49,
+        "intensity": 100,
+        "assignment": "CH2Cl⁺"
+      },
+      {
+        "mz": 35,
+        "intensity": 35,
+        "assignment": "Cl⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "5.30 ppm",
+        "multiplicity": "s",
+        "integration": "2H",
+        "assignment": "CH2Cl2"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "54 ppm",
+        "assignment": "CH2Cl2"
+      }
+    ]
+  },
+  {
+    "name_ja": "アセトニトリル",
+    "name_en": "acetonitrile",
+    "iupac_name": "acetonitrile",
+    "cas": "75-05-8",
+    "formula": "C2H3N",
+    "mw": 41.05,
+    "smiles": "CC#N",
+    "melting_point": "-45.7 °C",
+    "boiling_point": "81.6 °C",
+    "density": "0.786 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "3000 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "2250 cm⁻¹",
+        "assignment": "C≡N 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 41,
+        "intensity": 100,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 40,
+        "intensity": 30,
+        "assignment": "M-H⁺"
+      },
+      {
+        "mz": 15,
+        "intensity": 15,
+        "assignment": "CH3⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "2.00 ppm",
+        "multiplicity": "s",
+        "integration": "3H",
+        "assignment": "CH3CN"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "118 ppm",
+        "assignment": "C≡N"
+      },
+      {
+        "shift": "1.7 ppm",
+        "assignment": "CH3"
+      }
+    ]
+  },
+  {
+    "name_ja": "テトラヒドロフラン",
+    "name_en": "tetrahydrofuran",
+    "iupac_name": "oxolane",
+    "cas": "109-99-9",
+    "formula": "C4H8O",
+    "mw": 72.11,
+    "smiles": "C1CCOC1",
+    "melting_point": "-108.4 °C",
+    "boiling_point": "66.0 °C",
+    "density": "0.889 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "2970 cm⁻¹",
+        "assignment": "C-H 伸縮"
+      },
+      {
+        "wavenumber": "1060 cm⁻¹",
+        "assignment": "C-O-C 伸縮"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 72,
+        "intensity": 40,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 42,
+        "intensity": 100,
+        "assignment": "フラグメントイオン"
+      },
+      {
+        "mz": 41,
+        "intensity": 55,
+        "assignment": "C3H5⁺"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "3.58 ppm",
+        "multiplicity": "m",
+        "integration": "4H",
+        "assignment": "OCH2"
+      },
+      {
+        "shift": "1.75 ppm",
+        "multiplicity": "m",
+        "integration": "4H",
+        "assignment": "CH2"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "68 ppm",
+        "assignment": "OCH2"
+      },
+      {
+        "shift": "26 ppm",
+        "assignment": "CH2"
+      }
+    ]
+  },
+  {
+    "name_ja": "ピリジン",
+    "name_en": "pyridine",
+    "iupac_name": "pyridine",
+    "cas": "110-86-1",
+    "formula": "C5H5N",
+    "mw": 79.1,
+    "smiles": "n1ccccc1",
+    "melting_point": "-41.6 °C",
+    "boiling_point": "115.2 °C",
+    "density": "0.982 g/mL",
+    "state": "液体",
+    "ir_peaks": [
+      {
+        "wavenumber": "3030 cm⁻¹",
+        "assignment": "芳香族 C-H 伸縮"
+      },
+      {
+        "wavenumber": "1580 cm⁻¹",
+        "assignment": "芳香環 C=C/C=N 伸縮"
+      },
+      {
+        "wavenumber": "750 cm⁻¹",
+        "assignment": "芳香族 C-H 面外変角"
+      }
+    ],
+    "ei_ms_peaks": [
+      {
+        "mz": 79,
+        "intensity": 100,
+        "assignment": "分子イオン M⁺"
+      },
+      {
+        "mz": 52,
+        "intensity": 30,
+        "assignment": "フラグメントイオン"
+      },
+      {
+        "mz": 51,
+        "intensity": 25,
+        "assignment": "フラグメントイオン"
+      }
+    ],
+    "h_nmr_peaks": [
+      {
+        "shift": "8.50 ppm",
+        "multiplicity": "m",
+        "integration": "2H",
+        "assignment": "α-H"
+      },
+      {
+        "shift": "7.60 ppm",
+        "multiplicity": "m",
+        "integration": "1H",
+        "assignment": "γ-H"
+      },
+      {
+        "shift": "7.20 ppm",
+        "multiplicity": "m",
+        "integration": "2H",
+        "assignment": "β-H"
+      }
+    ],
+    "c_nmr_peaks": [
+      {
+        "shift": "150 ppm",
+        "assignment": "α-C"
+      },
+      {
+        "shift": "136 ppm",
+        "assignment": "γ-C"
+      },
+      {
+        "shift": "124 ppm",
+        "assignment": "β-C"
+      }
+    ]
+  }
+]

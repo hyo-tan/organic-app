@@ -1,0 +1,24 @@
+{
+  "type": "EI-MS",
+  "source": "generated from compounds.json peak list",
+  "source_url": "",
+  "x_unit": "m/z",
+  "y_unit": "relative intensity",
+  "data": [
+    {
+      "x": 84,
+      "y": 60,
+      "assignment": "分子イオン関連ピーク"
+    },
+    {
+      "x": 49,
+      "y": 100,
+      "assignment": "CH2Cl⁺"
+    },
+    {
+      "x": 35,
+      "y": 35,
+      "assignment": "Cl⁺"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "type": "EI-MS",
+  "source": "generated from compounds.json peak list",
+  "source_url": "",
+  "x_unit": "m/z",
+  "y_unit": "relative intensity",
+  "data": [
+    {
+      "x": 92,
+      "y": 70,
+      "assignment": "分子イオン M⁺"
+    },
+    {
+      "x": 91,
+      "y": 100,
+      "assignment": "トロピリウムイオン C7H7⁺"
+    },
+    {
+      "x": 65,
+      "y": 20,
+      "assignment": "フラグメントイオン"
+    }
+  ]
+}
