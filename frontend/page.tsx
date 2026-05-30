@@ -302,10 +302,10 @@ function PlotlySpectrum({ spectrum }: { spectrum: SpectrumXY }) {
             <>
               {" "}
               <a
-                className="text-blue-600 underline"
                 href={spectrum.source_url}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
               >
                 source
               </a>
@@ -712,9 +712,7 @@ export default function Home() {
                 borderColor: "#0891b2",
               }}
             >
-              <h3 className="font-bold mb-2 text-cyan-900">
-                利用上の注意
-              </h3>
+              <h3 className="font-bold mb-2 text-cyan-900">利用上の注意</h3>
 
               <p className="text-sm text-gray-700">
                 このアプリは、実験・研究・安全性判断・正式な分析結果の確認を目的としたものではありません。
