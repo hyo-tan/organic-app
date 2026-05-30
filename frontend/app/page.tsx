@@ -3,20 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
+// クライアントサイドでのみPlotlyを読み込むように修正
 const Plot = dynamic(
   async () => {
     const mod = await import("react-plotly.js");
     return mod.default;
   },
   { ssr: false }
-) as any;
+);
 
 const getApiBaseUrl = () => {
-  if (typeof window === "undefined") {
-    return "http://127.0.0.1:8000";
-  }
-
-  return `http://${window.location.hostname}:8000`;
+  return "https://organic-compound-api.onrender.com";
 };
 
 type IrPeak = {
@@ -262,7 +259,6 @@ function PlotlySpectrum({ spectrum }: { spectrum: SpectrumXY }) {
       {isMS && sortedData.some((point) => point.assignment) && (
         <div className="mt-4">
           <h4 className="font-bold mb-2">ピーク帰属</h4>
-
           <ul className="list-disc pl-6 text-sm">
             {sortedData
               .filter((point) => point.assignment)
@@ -278,7 +274,6 @@ function PlotlySpectrum({ spectrum }: { spectrum: SpectrumXY }) {
       {isIR && sortedData.some((point) => point.assignment) && (
         <div className="mt-4">
           <h4 className="font-bold mb-2">主要吸収の帰属</h4>
-
           <ul className="list-disc pl-6 text-sm">
             {sortedData
               .filter((point) => point.assignment)
@@ -300,7 +295,7 @@ function PlotlySpectrum({ spectrum }: { spectrum: SpectrumXY }) {
               <a
                 href={spectrum.source_url}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-blue-600 underline"
               >
                 source
@@ -374,7 +369,6 @@ function CompoundCategorySection({
               <summary className="font-bold cursor-pointer">
                 {category}（{groupedCompounds[category].length}件）
               </summary>
-
               <div className="flex gap-2 flex-wrap mt-3">
                 {groupedCompounds[category].map((compound) => (
                   <button
@@ -410,12 +404,8 @@ export default function Home() {
   const [results, setResults] = useState<Compound[]>([]);
   const [allCompounds, setAllCompounds] = useState<Compound[]>([]);
   const [masses, setMasses] = useState<{ [key: string]: string }>({});
-  const [openSpectra, setOpenSpectra] = useState<{ [key: string]: boolean }>(
-    {}
-  );
-  const [activeTabs, setActiveTabs] = useState<{ [key: string]: SpectrumTab }>(
-    {}
-  );
+  const [openSpectra, setOpenSpectra] = useState<{ [key: string]: boolean }>({});
+  const [activeTabs, setActiveTabs] = useState<{ [key: string]: SpectrumTab }>({});
   const [spectraData, setSpectraData] = useState<{
     [key: string]: SpectrumXY | null;
   }>({});
@@ -673,7 +663,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg mt-4 text-gray-800">
-            構造式・基本物性・IR・EI-MS・NMRをまとめて確認できる学習用検索アプリです。
+            有機化合物の構造式・命名法・基本物性・主要スペクトルを学ぶための学習用検索アプリです。
           </p>
         </section>
 
@@ -689,20 +679,27 @@ export default function Home() {
             <p className="text-sm font-bold text-cyan-900 mb-1">
               App Description
             </p>
-
-            <h2 className="text-2xl font-bold mb-3">
-              このアプリでできること
-            </h2>
-
+            <h2 className="text-2xl font-bold mb-3">このアプリでできること</h2>
             <p className="text-lg text-gray-800">
-              化合物名を入力するか、下の登録済み化合物一覧から選択すると、
-              化合物の基本情報、構造式、物質量計算、IR、EI-MS、¹H NMR、
-              ¹³C NMRを確認できます。
+              化合物名を入力するか、下の登録済み化合物一覧から選択すると、化合物の基本情報、構造式、物質量計算、IR、EI-MS、¹H NMR、¹³C NMRを確認できます。
             </p>
+
+            <div
+              className="mt-4 border rounded p-4 bg-white"
+              style={{
+                borderColor: "#0891b2",
+              }}
+            >
+              <h3 className="font-bold mb-2 text-cyan-900">利用上の注意</h3>
+              <p className="text-sm text-gray-700">
+                このアプリは、実験・研究・安全性判断・正式な分析結果の確認を目的としたものではありません。表示される物性値やスペクトルには、学習用・参考用のデータや推定データが含まれます。有機化合物の構造式、命名法、官能基、主要なIR・EI-MS・NMRスペクトルの特徴を理解するための学習支援ツールとして使用してください。
+              </p>
+            </div>
           </div>
 
           <div className="flex gap-2 flex-wrap mb-5">
             <span className="border rounded px-3 py-1 bg-white">構造式</span>
+            <span className="border rounded px-3 py-1 bg-white">命名法</span>
             <span className="border rounded px-3 py-1 bg-white">物性情報</span>
             <span className="border rounded px-3 py-1 bg-white">IR</span>
             <span className="border rounded px-3 py-1 bg-white">EI-MS</span>
@@ -729,7 +726,6 @@ export default function Home() {
               }}
               placeholder="例：ベンゼン、酢酸エチル、ヘプタン"
             />
-
             <button
               className="bg-blue-500 text-white px-6 py-2 text-xl rounded"
               onClick={handleSearch}
@@ -777,11 +773,9 @@ export default function Home() {
                           <h2 className="text-2xl font-bold">
                             {compound.name_ja}
                           </h2>
-
                           <span className="border rounded px-2 py-1 text-sm bg-gray-50">
                             {getQualityLabel(compound.data_quality)}
                           </span>
-
                           <span className="border rounded px-2 py-1 text-sm bg-gray-50">
                             {compound.category || "その他"}
                           </span>
@@ -824,12 +818,16 @@ export default function Home() {
 
                       <div>
                         <p className="text-lg font-bold mb-2">構造式</p>
-
                         {structureImageUrl ? (
                           <img
                             src={structureImageUrl}
                             alt={`${compound.name_ja}の構造式`}
-                            className="border rounded bg-white p-2 w-64 h-64 object-contain"
+                            className="border rounded bg-white p-2 object-contain"
+                            style={{
+                              width: "16rem",
+                              height: "16rem",
+                              maxWidth: "100%",
+                            }}
                             onError={(event) => {
                               event.currentTarget.style.display = "none";
                             }}
@@ -844,7 +842,6 @@ export default function Home() {
 
                     <div className="mt-6 border-t pt-4">
                       <h3 className="text-lg font-bold mb-2">物質量計算</h3>
-
                       <input
                         className="border p-2 mr-2"
                         type="number"
@@ -858,7 +855,6 @@ export default function Home() {
                           }))
                         }
                       />
-
                       {calc && (
                         <div className="mt-2">
                           <p>mol: {calc.mol.toFixed(6)} mol</p>
@@ -893,7 +889,6 @@ export default function Home() {
                             >
                               IR
                             </button>
-
                             <button
                               className={`px-4 py-2 border rounded ${
                                 activeTab === "EI-MS"
@@ -907,7 +902,6 @@ export default function Home() {
                             >
                               EI-MS
                             </button>
-
                             <button
                               className={`px-4 py-2 border rounded ${
                                 activeTab === "1H NMR"
@@ -921,7 +915,6 @@ export default function Home() {
                             >
                               ¹H NMR
                             </button>
-
                             <button
                               className={`px-4 py-2 border rounded ${
                                 activeTab === "13C NMR"
@@ -940,10 +933,7 @@ export default function Home() {
                           <div className="border rounded p-4 bg-gray-50">
                             {activeTab === "IR" && (
                               <div>
-                                <h3 className="font-bold mb-2">
-                                  IR スペクトル
-                                </h3>
-
+                                <h3 className="font-bold mb-2">IR スペクトル</h3>
                                 {irSpectrum ? (
                                   <PlotlySpectrum spectrum={irSpectrum} />
                                 ) : compound.ir_peaks &&
@@ -953,7 +943,6 @@ export default function Home() {
                                       外部スペクトルJSON未取得。
                                       compounds.json内のピークデータを表示しています。
                                     </p>
-
                                     <ul className="list-disc pl-6">
                                       {compound.ir_peaks.map((peak, index) => (
                                         <li key={index}>
@@ -973,7 +962,6 @@ export default function Home() {
                                 <h3 className="font-bold mb-2">
                                   EI-MS スペクトル
                                 </h3>
-
                                 {eiMsSpectrum ? (
                                   <PlotlySpectrum spectrum={eiMsSpectrum} />
                                 ) : compound.ei_ms_peaks &&
@@ -983,7 +971,6 @@ export default function Home() {
                                       外部スペクトルJSON未取得。
                                       compounds.json内のピークデータを表示しています。
                                     </p>
-
                                     <PlotlySpectrum
                                       spectrum={createFallbackEiMsSpectrum(
                                         compound.ei_ms_peaks
@@ -1001,21 +988,17 @@ export default function Home() {
                                 <h3 className="font-bold mb-2">
                                   ¹H NMR スペクトル
                                 </h3>
-
                                 {hNmrSpectrum ? (
                                   <PlotlySpectrum spectrum={hNmrSpectrum} />
                                 ) : compound.h_nmr_peaks &&
                                   compound.h_nmr_peaks.length > 0 ? (
                                   <ul className="list-disc pl-6">
-                                    {compound.h_nmr_peaks.map(
-                                      (peak, index) => (
-                                        <li key={index}>
-                                          δ {peak.shift},{" "}
-                                          {peak.multiplicity},{" "}
-                                          {peak.integration}: {peak.assignment}
-                                        </li>
-                                      )
-                                    )}
+                                    {compound.h_nmr_peaks.map((peak, index) => (
+                                      <li key={index}>
+                                        δ {peak.shift}, {peak.multiplicity},{" "}
+                                        {peak.integration}: {peak.assignment}
+                                      </li>
+                                    ))}
                                   </ul>
                                 ) : (
                                   <p>¹H NMRデータは未登録です。</p>
@@ -1028,19 +1011,16 @@ export default function Home() {
                                 <h3 className="font-bold mb-2">
                                   ¹³C NMR スペクトル
                                 </h3>
-
                                 {cNmrSpectrum ? (
                                   <PlotlySpectrum spectrum={cNmrSpectrum} />
                                 ) : compound.c_nmr_peaks &&
                                   compound.c_nmr_peaks.length > 0 ? (
                                   <ul className="list-disc pl-6">
-                                    {compound.c_nmr_peaks.map(
-                                      (peak, index) => (
-                                        <li key={index}>
-                                          δ {peak.shift}: {peak.assignment}
-                                        </li>
-                                      )
-                                    )}
+                                    {compound.c_nmr_peaks.map((peak, index) => (
+                                      <li key={index}>
+                                        δ {peak.shift}: {peak.assignment}
+                                      </li>
+                                    ))}
                                   </ul>
                                 ) : (
                                   <p>¹³C NMRデータは未登録です。</p>
