@@ -12,15 +12,7 @@ const Plot = dynamic(
 ) as any;
 
 const getApiBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_API_BASE_URL) {
-    return process.env.NEXT_PUBLIC_API_BASE_URL;
-  }
-
-  if (typeof window === "undefined") {
-    return "http://127.0.0.1:8000";
-  }
-
-  return `http://${window.location.hostname}:8000`;
+  return "https://organic-compound-api.onrender.com";
 };
 
 type IrPeak = {
