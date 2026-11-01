@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS spectra(
   PRIMARY KEY(compound_id, kind)
 );
 CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY, value TEXT);
+CREATE TABLE IF NOT EXISTS stage_b_done(cid INTEGER PRIMARY KEY, done_at TEXT);
 """
 
 PEAK_KEYS = {"ir": "ir_peaks", "ei_ms": "ei_ms_peaks", "h_nmr": "h_nmr_peaks", "c_nmr": "c_nmr_peaks"}

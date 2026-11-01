@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+compounds.db
+wikidata_work.db

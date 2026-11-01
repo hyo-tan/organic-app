@@ -205,28 +205,35 @@ def fetch_experimental(cid: int) -> dict[str, str]:
 
 
 def stage_b(con, limit: int | None = None) -> None:
-    """実験物性が未取得の pubchem 行を PUG VIEW で補完する（再開可能）。"""
+    """実験物性を PUG VIEW で補完する。試行済みCIDは stage_b_done に記録し、
+    値が無かった化合物も再実行でスキップする（完全な再開可能性）。"""
     rows = con.execute(
-        """SELECT id, cid FROM compounds
-           WHERE tier='pubchem' AND cid IS NOT NULL
-             AND (melting_point IS NULL AND boiling_point IS NULL AND density IS NULL)
-           ORDER BY cid"""
+        """SELECT c.id, c.cid FROM compounds c
+           LEFT JOIN stage_b_done d ON d.cid = c.cid
+           WHERE c.tier='pubchem' AND c.cid IS NOT NULL AND d.cid IS NULL
+           ORDER BY c.cid"""
     ).fetchall()
     if limit:
         rows = rows[:limit]
-    print(f"[stage B] targets: {len(rows)} compounds")
+    print(f"[stage B] targets: {len(rows)} compounds", flush=True)
     done = 0
+    filled = 0
     for r in rows:
         props = fetch_experimental(int(r["cid"]))
         time.sleep(0.25)
         if props:
             sets = ", ".join(f"{k}=?" for k in props)
             con.execute(f"UPDATE compounds SET {sets} WHERE id=?", (*props.values(), r["id"]))
-            done += 1
-        if (done % 50) == 0:
+            filled += 1
+        con.execute(
+            "INSERT OR IGNORE INTO stage_b_done VALUES(?, datetime('now'))", (int(r["cid"]),)
+        )
+        done += 1
+        if done % 50 == 0:
             con.commit()
+            print(f"[stage B] progress: {done}/{len(rows)} tried, {filled} filled", flush=True)
     con.commit()
-    print(f"[stage B] done: experimental props filled for {done} compounds")
+    print(f"[stage B] done: tried {done}, experimental props filled for {filled} compounds", flush=True)
 
 
 def main() -> None:

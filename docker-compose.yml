@@ -1,0 +1,22 @@
+# 有機化合物ツール（ミニPC自宅サーバー用）
+# 使い方: リポジトリ直下で `docker compose up -d --build`
+#   Web:  http://<ミニPCのIP>:8080
+#   API:  http://<ミニPCのIP>:8000
+services:
+  api:
+    build: ./backend
+    container_name: organic-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # 化合物DB。ホスト側で migrate_to_db.py / fetch_pubchem_bulk.py を実行して用意する
+      - ./backend/compounds.db:/app/compounds.db
+  web:
+    build: ./frontend
+    container_name: organic-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
