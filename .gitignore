@@ -1,0 +1,4 @@
+# 生成物・キャッシュは Git 管理外（compounds.db は migrate/fetch スクリプトで再生成できる）
+__pycache__/
+*.pyc
+backend/compounds.db

@@ -29,6 +29,17 @@ app.add_middleware(
 
 
 def load_compounds() -> list[dict[str, Any]]:
+    # Phase 1 (DB化): compounds.db があれば SQLite を正本にする。無ければ従来の JSON にフォールバック。
+    db_path = BASE_DIR / "compounds.db"
+    if db_path.exists():
+        import db as dblayer
+
+        con = dblayer.connect(db_path)
+        try:
+            return dblayer.load_compounds(con)
+        finally:
+            con.close()
+
     if not COMPOUNDS_PATH.exists():
         return []
 
@@ -54,6 +65,8 @@ def compound_matches_query(compound: dict[str, Any], query: str) -> bool:
         compound.get("formula"),
         compound.get("smiles"),
         compound.get("category"),
+        compound.get("inchi_key"),
+        " ".join(compound.get("synonyms") or []),
     ]
 
     return any(q in normalize_text(field) for field in searchable_fields)
@@ -110,6 +123,19 @@ def get_spectrum(cas: str, spectrum_type: str):
 
     if spectrum_type not in allowed_types:
         raise HTTPException(status_code=400, detail="Unsupported spectrum type")
+
+    # DB があれば先に引く（曲線データは圧縮してDBに格納済み）
+    db_path = BASE_DIR / "compounds.db"
+    if db_path.exists():
+        import db as dblayer
+
+        con = dblayer.connect(db_path)
+        try:
+            data = dblayer.get_spectrum_data(con, cas, spectrum_type.replace("-", "_"))
+        finally:
+            con.close()
+        if data is not None:
+            return data
 
     spectrum_path = SPECTRA_DIR / cas / allowed_types[spectrum_type]
 
