@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { getApiBaseUrl } from "./lib/api";
 
 // クライアントサイドでのみPlotlyを読み込むように修正
 const Plot = dynamic(
@@ -11,10 +13,6 @@ const Plot = dynamic(
   },
   { ssr: false }
 );
-
-const getApiBaseUrl = () => {
-  return "https://organic-compound-api.onrender.com";
-};
 
 type IrPeak = {
   wavenumber: string;
@@ -523,10 +521,11 @@ export default function Home() {
   };
 
   const getStructureImageUrl = (compound: Compound) => {
+    // Phase 2: 自前バックエンド (RDKit) で描画する。SMILES が無い場合のみ PubChem の画像を使う。
     if (compound.smiles) {
-      return `https://cactus.nci.nih.gov/chemical/structure/${encodeURIComponent(
+      return `${getApiBaseUrl()}/api/structure/depict?smiles=${encodeURIComponent(
         compound.smiles
-      )}/image`;
+      )}&format=svg&width=420&height=360`;
     }
 
     if (compound.cid) {
@@ -708,6 +707,16 @@ export default function Home() {
             <span className="border rounded px-3 py-1 bg-white">
               登録数：{allCompounds.length} 化合物
             </span>
+          </div>
+
+          <div className="mb-5">
+            <Link
+              href="/editor"
+              className="inline-block border rounded px-4 py-2 bg-white font-bold text-cyan-900 hover:bg-cyan-50"
+              style={{ borderColor: "#0891b2" }}
+            >
+              ✎ 構造式エディタを開く（描画・立体異性体・3D表示）
+            </Link>
           </div>
 
           <div className="flex gap-3 flex-wrap">

@@ -6,6 +6,10 @@
   },
   "dependencies": {
     "@types/react-plotly.js": "latest",
+    "3dmol": "^2.5.5",
+    "ketcher-core": "^3.18.0",
+    "ketcher-react": "^3.18.0",
+    "ketcher-standalone": "^3.18.0",
     "next": "latest",
     "plotly.js": "latest",
     "react": "latest",

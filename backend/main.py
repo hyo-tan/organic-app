@@ -27,6 +27,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Phase 2: 構造式描画 API (RDKit)。rdkit 未導入の環境では検索APIだけでも動くよう任意登録にする。
+try:
+    from structure import router as structure_router
+
+    app.include_router(structure_router)
+except Exception as _e:  # pragma: no cover
+    print(f"[warn] structure API disabled: {_e}")
+
 
 def load_compounds() -> list[dict[str, Any]]:
     # Phase 1 (DB化): compounds.db があれば SQLite を正本にする。無ければ従来の JSON にフォールバック。

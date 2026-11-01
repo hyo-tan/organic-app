@@ -1,3 +1,5 @@
 fastapi
 uvicorn
 requests
+# Phase 2 (structure API)
+rdkit
