@@ -709,13 +709,20 @@ export default function Home() {
             </span>
           </div>
 
-          <div className="mb-5">
+          <div className="mb-5 flex gap-2 flex-wrap">
             <Link
               href="/editor"
               className="inline-block border rounded px-4 py-2 bg-white font-bold text-cyan-900 hover:bg-cyan-50"
               style={{ borderColor: "#0891b2" }}
             >
               ✎ 構造式エディタを開く（描画・立体異性体・3D表示）
+            </Link>
+            <Link
+              href="/analysis"
+              className="inline-block border rounded px-4 py-2 bg-white font-bold text-cyan-900 hover:bg-cyan-50"
+              style={{ borderColor: "#0891b2" }}
+            >
+              📈 スペクトル解析を開く（xlsx読込・重ね描き・DB比較）
             </Link>
           </div>
 

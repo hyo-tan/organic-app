@@ -35,6 +35,14 @@ try:
 except Exception as _e:  # pragma: no cover
     print(f"[warn] structure API disabled: {_e}")
 
+# Phase 3: スペクトル解析 API (scipy / openpyxl)。未導入の環境では任意登録にする。
+try:
+    from analysis import router as analysis_router
+
+    app.include_router(analysis_router)
+except Exception as _e:  # pragma: no cover
+    print(f"[warn] analysis API disabled: {_e}")
+
 
 def load_compounds() -> list[dict[str, Any]]:
     # Phase 1 (DB化): compounds.db があれば SQLite を正本にする。無ければ従来の JSON にフォールバック。

@@ -3,3 +3,8 @@ uvicorn
 requests
 # Phase 2 (structure API)
 rdkit
+
+# Phase 3 (spectrum analysis API)
+scipy
+openpyxl
+python-multipart
