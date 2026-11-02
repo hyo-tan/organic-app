@@ -38,11 +38,13 @@ type CNmrPeak = {
 };
 
 type Compound = {
-  name_ja: string;
-  name_en: string;
-  iupac_name: string;
-  cas: string;
+  // DB拡張分 (tier='pubchem') では未登録の項目が null で返る
+  name_ja: string | null;
+  name_en: string | null;
+  iupac_name: string | null;
+  cas: string | null;
   cid?: number | string;
+  inchi_key?: string | null;
   formula: string;
   mw: number;
   smiles: string;
@@ -368,20 +370,21 @@ function CompoundCategorySection({
                 {category}（{groupedCompounds[category].length}件）
               </summary>
               <div className="flex gap-2 flex-wrap mt-3">
-                {groupedCompounds[category].map((compound) => (
+                {groupedCompounds[category].map((compound, compoundIndex) => (
                   <button
-                    key={`${compound.cas}-${compound.name_en}`}
+                    key={`${compound.inchi_key ?? compound.cas ?? compound.cid ?? "compound"}-${compoundIndex}`}
                     className="border rounded bg-gray-50 hover:bg-blue-100"
                     style={{
                       fontSize: "0.9rem",
                       padding: "0.45rem 0.7rem",
                     }}
                     onClick={() => {
-                      setQuery(compound.name_ja);
-                      searchByText(compound.name_ja);
+                      const term = compound.name_ja ?? compound.name_en ?? "";
+                      setQuery(term);
+                      searchByText(term);
                     }}
                   >
-                    {compound.name_ja}
+                    {compound.name_ja ?? compound.name_en}
                   </button>
                 ))}
               </div>
@@ -538,12 +541,21 @@ export default function Home() {
 
   const fetchSpectrum = async (
     compoundKey: string,
-    cas: string,
+    cas: string | null,
     spectrumType: "ei-ms" | "ir" | "h-nmr" | "c-nmr"
   ) => {
     const cacheKey = `${compoundKey}-${spectrumType}`;
 
     if (spectraData[cacheKey] !== undefined) {
+      return;
+    }
+
+    // CAS が無い化合物はスペクトル曲線を持たない（ピークのみ）
+    if (!cas) {
+      setSpectraData((prev) => ({
+        ...prev,
+        [cacheKey]: null,
+      }));
       return;
     }
 
@@ -578,7 +590,7 @@ export default function Home() {
     }
   };
 
-  const toggleSpectrum = (key: string, cas: string) => {
+  const toggleSpectrum = (key: string, cas: string | null) => {
     setOpenSpectra((prev) => ({
       ...prev,
       [key]: !prev[key],
