@@ -1,4 +1,4 @@
-# 生成物・キャッシュは Git 管理外（compounds.db は migrate/fetch スクリプトで再生成できる）
+# 生成物・キャッシュは Git 管理外
+# compounds.db は Render 公開用に Git 管理する（更新したら commit し直すこと）
 __pycache__/
 *.pyc
-backend/compounds.db
