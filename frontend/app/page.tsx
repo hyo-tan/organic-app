@@ -455,8 +455,9 @@ export default function Home() {
   });
 
   sortedCategories.forEach((category) => {
+    // DB拡張分 (tier='pubchem') は name_ja が null のことがあるため、英語名で代替して落ちないようにする
     groupedCompounds[category].sort((a, b) =>
-      a.name_ja.localeCompare(b.name_ja, "ja")
+      (a.name_ja ?? a.name_en ?? "").localeCompare(b.name_ja ?? b.name_en ?? "", "ja")
     );
   });
 
