@@ -1,3 +1,13 @@
+# 本番公開の構成（2026-11-02 時点）
+
+- フロント: Cloudflare Pages — https://organic-compound-app.pages.dev
+  （GitHub main への push で自動ビルド＆デプロイ。ルートは frontend/、ビルドは `npm run build`）
+- API: Render — https://organic-compound-api.onrender.com
+  （GitHub main への push で自動デプロイ。compounds.db はリポジトリに含めて管理する）
+- 同名の Cloudflare Workers プロジェクトは旧・手動デプロイの残骸で、Git 連携は解除済み（未使用）。
+
+以下はミニPC（自宅サーバー）へ移す場合の手順。
+
 # ミニPCへのデプロイ手順（自宅サーバー）
 
 前提: Linux (Ubuntu Server LTS / Debian 想定)、メモリ16GB、Docker Engine + Compose プラグイン導入済み。
