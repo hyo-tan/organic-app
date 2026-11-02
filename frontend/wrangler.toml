@@ -1,0 +1,8 @@
+# Cloudflare Workers (organic-compound-app) 用設定
+# Next.js の静的エクスポート (out/) をそのまま配信する assets-only Worker。
+# コード側の処理は無い（API は Render 側）。
+name = "organic-compound-app"
+compatibility_date = "2026-10-01"
+
+[assets]
+directory = "./out"
