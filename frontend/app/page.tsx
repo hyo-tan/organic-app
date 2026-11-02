@@ -336,6 +336,10 @@ function CompoundCategorySection({
   setQuery: (value: string) => void;
   searchByText: (text: string) => Promise<void>;
 }) {
+  // カテゴリごとに少しずつ表示する（全件描画すると1万件で重くなるため）
+  const PAGE_SIZE = 100;
+  const [visibleCounts, setVisibleCounts] = useState<Record<string, number>>({});
+
   return (
     <section
       className="border rounded p-6 mb-8"
@@ -357,39 +361,77 @@ function CompoundCategorySection({
 
       {allCompounds.length > 0 ? (
         <div className="space-y-5">
-          {sortedCategories.map((category, index) => (
-            <details
-              key={category}
-              open={index < 4}
-              className="border rounded p-4 bg-white"
-              style={{
-                borderColor: "#86efac",
-              }}
-            >
-              <summary className="font-bold cursor-pointer">
-                {category}（{groupedCompounds[category].length}件）
-              </summary>
-              <div className="flex gap-2 flex-wrap mt-3">
-                {groupedCompounds[category].map((compound, compoundIndex) => (
-                  <button
-                    key={`${compound.inchi_key ?? compound.cas ?? compound.cid ?? "compound"}-${compoundIndex}`}
-                    className="border rounded bg-gray-50 hover:bg-blue-100"
-                    style={{
-                      fontSize: "0.9rem",
-                      padding: "0.45rem 0.7rem",
-                    }}
-                    onClick={() => {
-                      const term = compound.name_ja ?? compound.name_en ?? "";
-                      setQuery(term);
-                      searchByText(term);
-                    }}
-                  >
-                    {compound.name_ja ?? compound.name_en}
-                  </button>
-                ))}
-              </div>
-            </details>
-          ))}
+          {sortedCategories.map((category, index) => {
+            const compoundsInCategory = groupedCompounds[category];
+            const visibleCount = visibleCounts[category] ?? PAGE_SIZE;
+            const shownCompounds = compoundsInCategory.slice(0, visibleCount);
+            const remaining = compoundsInCategory.length - shownCompounds.length;
+
+            return (
+              <details
+                key={category}
+                open={index < 4}
+                className="border rounded p-4 bg-white"
+                style={{
+                  borderColor: "#86efac",
+                }}
+              >
+                <summary className="font-bold cursor-pointer">
+                  {category}（{compoundsInCategory.length}件）
+                </summary>
+                <div className="flex gap-2 flex-wrap mt-3">
+                  {shownCompounds.map((compound, compoundIndex) => (
+                    <button
+                      key={`${compound.inchi_key ?? compound.cas ?? compound.cid ?? "compound"}-${compoundIndex}`}
+                      className="border rounded bg-gray-50 hover:bg-blue-100"
+                      style={{
+                        fontSize: "0.9rem",
+                        padding: "0.45rem 0.7rem",
+                      }}
+                      onClick={() => {
+                        const term = compound.name_ja ?? compound.name_en ?? "";
+                        setQuery(term);
+                        searchByText(term);
+                      }}
+                    >
+                      {compound.name_ja ?? compound.name_en}
+                    </button>
+                  ))}
+                </div>
+                {remaining > 0 && (
+                  <div className="flex items-center gap-3 mt-3">
+                    <span className="text-sm text-gray-600">
+                      {shownCompounds.length} / {compoundsInCategory.length} 件を表示中
+                    </span>
+                    <button
+                      className="border rounded bg-green-50 hover:bg-green-100 font-bold"
+                      style={{ fontSize: "0.9rem", padding: "0.45rem 0.7rem" }}
+                      onClick={() =>
+                        setVisibleCounts((prev) => ({
+                          ...prev,
+                          [category]: visibleCount + PAGE_SIZE,
+                        }))
+                      }
+                    >
+                      もっと見る（+{Math.min(PAGE_SIZE, remaining)}件）
+                    </button>
+                    <button
+                      className="border rounded bg-gray-50 hover:bg-gray-100"
+                      style={{ fontSize: "0.9rem", padding: "0.45rem 0.7rem" }}
+                      onClick={() =>
+                        setVisibleCounts((prev) => ({
+                          ...prev,
+                          [category]: compoundsInCategory.length,
+                        }))
+                      }
+                    >
+                      すべて表示
+                    </button>
+                  </div>
+                )}
+              </details>
+            );
+          })}
         </div>
       ) : (
         <p className="text-gray-700">化合物一覧を読み込み中です。</p>
