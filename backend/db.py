@@ -150,8 +150,9 @@ def _row_to_compound(con: sqlite3.Connection, row: sqlite3.Row, with_peaks: bool
             r = con.execute("SELECT data FROM peaks WHERE compound_id=? AND kind=?", (row["id"], kind)).fetchone()
             c[key] = json.loads(r["data"]) if r else []
     if spectra_kinds is None:
-        spectra_kinds = [r[0] for r in con.execute("SELECT kind FROM spectra WHERE compound_id=? ORDER BY kind", (row["id"],)).fetchall()]
-    # スペクトル曲線が登録されている種別（例: ["ir", "ei_ms", "h_nmr", "c_nmr"]）。
+        spectra_kinds = [r[0] for r in con.execute("SELECT kind FROM spectra WHERE compound_id=? UNION SELECT kind FROM peaks WHERE compound_id=? ORDER BY kind", (row["id"], row["id"])).fetchall()]
+    # スペクトルデータが登録されている種別（例: ["ir", "ei_ms", "h_nmr", "c_nmr"]）。
+    # 曲線（spectra）だけでなくピークのみの登録も含む。
     # フロント側で「未登録」を fetch 前に判定するために付与する。
     c["spectra_kinds"] = spectra_kinds
     return c
@@ -160,8 +161,12 @@ def _row_to_compound(con: sqlite3.Connection, row: sqlite3.Row, with_peaks: bool
 def load_compounds(con: sqlite3.Connection) -> list[dict[str, Any]]:
     rows = con.execute("SELECT * FROM compounds ORDER BY id").fetchall()
     kinds_map: dict[int, list[str]] = {}
-    for compound_id, kind in con.execute("SELECT compound_id, kind FROM spectra ORDER BY kind"):
-        kinds_map.setdefault(compound_id, []).append(kind)
+    for compound_id, kind in con.execute("SELECT compound_id, kind FROM spectra UNION SELECT compound_id, kind FROM peaks"):
+        lst = kinds_map.setdefault(compound_id, [])
+        if kind not in lst:
+            lst.append(kind)
+    for lst in kinds_map.values():
+        lst.sort()
     return [_row_to_compound(con, r, spectra_kinds=kinds_map.get(r["id"], [])) for r in rows]
 
 
