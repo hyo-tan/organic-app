@@ -58,6 +58,8 @@ type Compound = {
   ei_ms_peaks?: EiMsPeak[];
   h_nmr_peaks?: HNmrPeak[];
   c_nmr_peaks?: CNmrPeak[];
+  // スペクトル曲線が登録されている種別（APIが付与）。未登録判定に使う
+  spectra_kinds?: string[];
 };
 
 type SpectrumTab = "IR" | "EI-MS" | "1H NMR" | "13C NMR";
@@ -834,6 +836,29 @@ export default function Home() {
                 const hNmrSpectrum = spectraData[`${key}-h-nmr`];
                 const cNmrSpectrum = spectraData[`${key}-c-nmr`];
 
+                // fetch 済みかどうか（未fetchなら「読み込み中」として扱う）
+                const irLoaded = `${key}-ir` in spectraData;
+                const eiMsLoaded = `${key}-ei-ms` in spectraData;
+                const hNmrLoaded = `${key}-h-nmr` in spectraData;
+                const cNmrLoaded = `${key}-c-nmr` in spectraData;
+
+                // スペクトルデータ（曲線またはピーク）の登録状況。
+                // spectra_kinds が無い応答（JSONフォールバック時）は従来どおり fetch して判定する。
+                const kindsKnown = Array.isArray(compound.spectra_kinds);
+                const hasCurve = (kind: string) =>
+                  !kindsKnown ||
+                  (compound.spectra_kinds?.includes(kind) ?? false);
+                const hasPeaks = (peaks?: unknown[]) =>
+                  !!peaks && peaks.length > 0;
+                const tabHasData: Record<SpectrumTab, boolean> = {
+                  IR: hasCurve("ir") || hasPeaks(compound.ir_peaks),
+                  "EI-MS": hasCurve("ei_ms") || hasPeaks(compound.ei_ms_peaks),
+                  "1H NMR": hasCurve("h_nmr") || hasPeaks(compound.h_nmr_peaks),
+                  "13C NMR": hasCurve("c_nmr") || hasPeaks(compound.c_nmr_peaks),
+                };
+                const hasAnySpectrumData =
+                  Object.values(tabHasData).some(Boolean);
+
                 const structureImageUrl = getStructureImageUrl(compound);
 
                 return (
@@ -850,6 +875,11 @@ export default function Home() {
                           <span className="border rounded px-2 py-1 text-sm bg-gray-50">
                             {compound.category || "その他"}
                           </span>
+                          {hasAnySpectrumData && (
+                            <span className="border rounded px-2 py-1 text-sm bg-green-50 text-green-700">
+                              スペクトル登録あり
+                            </span>
+                          )}
                         </div>
 
                         <p className="text-lg">{compound.name_en}</p>
@@ -944,60 +974,83 @@ export default function Home() {
                           : "▶ スペクトル情報を表示"}
                       </button>
 
-                      {openSpectra[key] && (
+                      {openSpectra[key] && !hasAnySpectrumData && (
+                        <div className="border rounded p-4 bg-gray-50">
+                          <p className="font-bold">
+                            この化合物のスペクトルデータは未登録です。
+                          </p>
+                          <p className="text-sm text-gray-600 mt-1">
+                            スペクトル曲線・ピークデータとも登録がありません。登録があるのは上記の基本情報（物性・構造式など）のみです。
+                          </p>
+                        </div>
+                      )}
+
+                      {openSpectra[key] && hasAnySpectrumData && (
                         <div>
                           <div className="flex gap-2 mb-4 flex-wrap">
                             <button
                               className={`px-4 py-2 border rounded ${
-                                activeTab === "IR"
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-white"
+                                !tabHasData.IR
+                                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                                  : activeTab === "IR"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-white"
                               }`}
+                              disabled={!tabHasData.IR}
                               onClick={() => {
                                 setActiveTab(key, "IR");
                                 fetchSpectrum(key, compound.cas, "ir");
                               }}
                             >
-                              IR
+                              IR{tabHasData.IR ? "" : "（未登録）"}
                             </button>
                             <button
                               className={`px-4 py-2 border rounded ${
-                                activeTab === "EI-MS"
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-white"
+                                !tabHasData["EI-MS"]
+                                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                                  : activeTab === "EI-MS"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-white"
                               }`}
+                              disabled={!tabHasData["EI-MS"]}
                               onClick={() => {
                                 setActiveTab(key, "EI-MS");
                                 fetchSpectrum(key, compound.cas, "ei-ms");
                               }}
                             >
-                              EI-MS
+                              EI-MS{tabHasData["EI-MS"] ? "" : "（未登録）"}
                             </button>
                             <button
                               className={`px-4 py-2 border rounded ${
-                                activeTab === "1H NMR"
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-white"
+                                !tabHasData["1H NMR"]
+                                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                                  : activeTab === "1H NMR"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-white"
                               }`}
+                              disabled={!tabHasData["1H NMR"]}
                               onClick={() => {
                                 setActiveTab(key, "1H NMR");
                                 fetchSpectrum(key, compound.cas, "h-nmr");
                               }}
                             >
-                              ¹H NMR
+                              ¹H NMR{tabHasData["1H NMR"] ? "" : "（未登録）"}
                             </button>
                             <button
                               className={`px-4 py-2 border rounded ${
-                                activeTab === "13C NMR"
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-white"
+                                !tabHasData["13C NMR"]
+                                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                                  : activeTab === "13C NMR"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-white"
                               }`}
+                              disabled={!tabHasData["13C NMR"]}
                               onClick={() => {
                                 setActiveTab(key, "13C NMR");
                                 fetchSpectrum(key, compound.cas, "c-nmr");
                               }}
                             >
-                              ¹³C NMR
+                              ¹³C NMR{tabHasData["13C NMR"] ? "" : "（未登録）"}
                             </button>
                           </div>
 
@@ -1007,12 +1060,13 @@ export default function Home() {
                                 <h3 className="font-bold mb-2">IR スペクトル</h3>
                                 {irSpectrum ? (
                                   <PlotlySpectrum spectrum={irSpectrum} />
+                                ) : !irLoaded ? (
+                                  <p className="text-gray-500">読み込み中…</p>
                                 ) : compound.ir_peaks &&
                                   compound.ir_peaks.length > 0 ? (
                                   <div>
                                     <p className="text-sm mb-2 text-gray-600">
-                                      外部スペクトルJSON未取得。
-                                      compounds.json内のピークデータを表示しています。
+                                      スペクトル曲線は未登録のため、ピークデータを表示しています。
                                     </p>
                                     <ul className="list-disc pl-6">
                                       {compound.ir_peaks.map((peak, index) => (
@@ -1035,12 +1089,13 @@ export default function Home() {
                                 </h3>
                                 {eiMsSpectrum ? (
                                   <PlotlySpectrum spectrum={eiMsSpectrum} />
+                                ) : !eiMsLoaded ? (
+                                  <p className="text-gray-500">読み込み中…</p>
                                 ) : compound.ei_ms_peaks &&
                                   compound.ei_ms_peaks.length > 0 ? (
                                   <div>
                                     <p className="text-sm mb-2 text-gray-600">
-                                      外部スペクトルJSON未取得。
-                                      compounds.json内のピークデータを表示しています。
+                                      スペクトル曲線は未登録のため、ピークデータを表示しています。
                                     </p>
                                     <PlotlySpectrum
                                       spectrum={createFallbackEiMsSpectrum(
@@ -1061,6 +1116,8 @@ export default function Home() {
                                 </h3>
                                 {hNmrSpectrum ? (
                                   <PlotlySpectrum spectrum={hNmrSpectrum} />
+                                ) : !hNmrLoaded ? (
+                                  <p className="text-gray-500">読み込み中…</p>
                                 ) : compound.h_nmr_peaks &&
                                   compound.h_nmr_peaks.length > 0 ? (
                                   <ul className="list-disc pl-6">
@@ -1084,6 +1141,8 @@ export default function Home() {
                                 </h3>
                                 {cNmrSpectrum ? (
                                   <PlotlySpectrum spectrum={cNmrSpectrum} />
+                                ) : !cNmrLoaded ? (
+                                  <p className="text-gray-500">読み込み中…</p>
                                 ) : compound.c_nmr_peaks &&
                                   compound.c_nmr_peaks.length > 0 ? (
                                   <ul className="list-disc pl-6">
