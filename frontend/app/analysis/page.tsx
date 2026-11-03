@@ -32,6 +32,8 @@ type Candidate = {
   cas: string | null;
   formula: string | null;
   score: number;
+  coverage: number;
+  intensity_similarity: number | null;
   matched: { db_value: number; assignment: string; observed: number | null }[];
   missing: { db_value: number; assignment: string }[];
   total_db_peaks: number;
@@ -142,6 +144,7 @@ export default function AnalysisPage() {
         body: JSON.stringify({
           spectrum_type: spectrumType,
           peaks_x: source.peaks.map((p) => p.x),
+          peaks_y: source.peaks.map((p) => p.y),
           limit: 10,
         }),
       });
@@ -343,7 +346,7 @@ export default function AnalysisPage() {
 
         {candidates && candidates.length > 0 && (
           <div className="border rounded bg-white px-4 py-3 flex flex-col gap-3">
-            <p className="font-bold text-sm">DB比較の候補（スコア = DBピークの一致割合）</p>
+            <p className="font-bold text-sm">DB比較の候補（スコア = ピーク一致割合 × 強度の近さ）</p>
             {candidates.map((cand, i) => (
               <div key={i} className="border rounded px-3 py-2 text-sm">
                 <div className="flex flex-wrap items-center gap-2">
@@ -354,6 +357,11 @@ export default function AnalysisPage() {
                   <span className="text-gray-600">
                     一致 {cand.matched.length} / {cand.total_db_peaks} ピーク
                   </span>
+                  {cand.intensity_similarity != null && (
+                    <span className="text-gray-600">
+                      強度類似度 {cand.intensity_similarity.toFixed(2)}
+                    </span>
+                  )}
                   {cand.formula && <span className="text-gray-600">{cand.formula}</span>}
                   {cand.cas && (
                     <button className={btn} disabled={busy} onClick={() => overlayDbSpectrum(cand)}>

@@ -170,12 +170,16 @@ def _db_peaks_for(kind: str) -> list[dict[str, Any]]:
         for p in plist:
             if kind == "ir":
                 center = _peak_center(p.get("wavenumber"))
+                inten = None
             elif kind == "ei_ms":
                 center = _peak_center(p.get("mz"))
+                inten = p.get("intensity") if isinstance(p.get("intensity"), (int, float)) else None
             else:
                 center = _peak_center(p.get("shift"))
+                # 1H NMR は積分値（"2H" など）を強度として使う。13C は強度なし
+                inten = _peak_center(p.get("integration")) if kind == "h_nmr" else None
             if center is not None:
-                peaks.append({"value": center, "assignment": p.get("assignment", ""), "raw": p})
+                peaks.append({"value": center, "assignment": p.get("assignment", ""), "raw": p, "intensity": inten})
         if peaks:
             out.append(
                 {
@@ -192,6 +196,7 @@ def _db_peaks_for(kind: str) -> list[dict[str, Any]]:
 class CompareIn(BaseModel):
     spectrum_type: str  # ir | ei_ms | h_nmr | c_nmr
     peaks_x: list[float]
+    peaks_y: Optional[list[float]] = None  # 観測ピークの強度（任意。あれば強度もスコアに使う）
     limit: int = 10
 
 
@@ -201,18 +206,51 @@ def compare(body: CompareIn):
         raise HTTPException(status_code=400, detail="spectrum_type は ir / ei_ms / h_nmr / c_nmr のいずれか")
     tol = TOLERANCES[body.spectrum_type]
     kind = PEAK_KIND_BY_TYPE[body.spectrum_type]
-    observed = sorted(body.peaks_x)
+    # 観測ピーク（位置, 強度）。強度が無い/数が合わない場合は位置のみで照合する
+    if body.peaks_y and len(body.peaks_y) == len(body.peaks_x):
+        omax = max(body.peaks_y) or 1.0
+        # 強度は「観測全体の最大ピーク=1」基準に正規化（DB側も化合物内の最大=1に揃える）
+        obs_pairs = sorted(((x, y / omax) for x, y in zip(body.peaks_x, body.peaks_y)), key=lambda t: t[0])
+    else:
+        obs_pairs = [(x, None) for x in sorted(body.peaks_x)]
+    intensity_kinds = kind in ("ei_ms", "h_nmr")
 
     results = []
     for comp in _db_peaks_for(kind):
         matched, missing = [], []
+        inten_pairs = []
+        db_intens = [pk["intensity"] for pk in comp["peaks"] if pk.get("intensity") is not None]
+        dmax = max(db_intens) if db_intens else 1.0
         for pk in comp["peaks"]:
-            hit = next((o for o in observed if abs(o - pk["value"]) <= tol), None)
-            entry = {"db_value": pk["value"], "assignment": pk["assignment"], "observed": hit}
-            (matched if hit is not None else missing).append(entry)
+            cands = [o for o in obs_pairs if abs(o[0] - pk["value"]) <= tol]
+            hit = min(cands, key=lambda o: abs(o[0] - pk["value"])) if cands else None
+            entry = {"db_value": pk["value"], "assignment": pk["assignment"], "observed": hit[0] if hit else None}
+            if hit is not None:
+                matched.append(entry)
+                if pk.get("intensity") is not None and hit[1] is not None and dmax > 0:
+                    inten_pairs.append((float(pk["intensity"]) / dmax, float(hit[1])))
+            else:
+                missing.append(entry)
         if not matched:
             continue
-        score = len(matched) / len(comp["peaks"])
+        coverage = len(matched) / len(comp["peaks"])
+        # 強度の近さ: 一致ペアの強度比（log）の平均から類似度を作る。
+        # コサイン類似度は正の短いベクトルだと大抵1に近づいてしまうため、
+        # 「100のはずが13しかない」のような桁違いを強く罰する方式にする
+        sim = None
+        log_pairs = [(a, b) for a, b in inten_pairs if a > 0 and b > 0]
+        if len(log_pairs) >= 2:
+            import math
+
+            mean_log = sum(abs(math.log(a / b)) for a, b in log_pairs) / len(log_pairs)
+            sim = 1.0 / (1.0 + mean_log)
+        if sim is not None:
+            score = coverage * (0.5 + 0.5 * sim)
+        elif intensity_kinds:
+            # 強度で検証できなかった候補は、強度が合った候補より少し下に置く
+            score = coverage * (0.5 + 0.5 * 0.85)
+        else:
+            score = coverage
         results.append(
             {
                 "name_ja": comp["name_ja"],
@@ -220,6 +258,8 @@ def compare(body: CompareIn):
                 "cas": comp["cas"],
                 "formula": comp["formula"],
                 "score": round(score, 3),
+                "coverage": round(coverage, 3),
+                "intensity_similarity": round(sim, 3) if sim is not None else None,
                 "matched": matched,
                 "missing": missing,
                 "total_db_peaks": len(comp["peaks"]),
