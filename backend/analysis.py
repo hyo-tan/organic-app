@@ -151,7 +151,7 @@ def _db_peaks_for(kind: str) -> list[dict[str, Any]]:
         rows = con.execute(
             """SELECT p.compound_id, p.data, c.name_ja, c.name_en, c.cas, c.formula
                FROM peaks p JOIN compounds c ON c.id = p.compound_id
-               WHERE p.kind=? AND c.tier='curated'""",
+               WHERE p.kind=?""",
             (kind,),
         ).fetchall()
     finally:
@@ -163,6 +163,10 @@ def _db_peaks_for(kind: str) -> list[dict[str, Any]]:
         except json.JSONDecodeError:
             continue
         peaks = []
+        if kind == "ei_ms":
+            # EI-MS は取り込みデータだとピーク数が多い（最大40件）ため、
+            # 照合には強度の高い上位10件だけを使う（割合スコアが不当に下がるのを防ぐ）
+            plist = sorted(plist, key=lambda p: -(p.get("intensity") or 0))[:10]
         for p in plist:
             if kind == "ir":
                 center = _peak_center(p.get("wavenumber"))
