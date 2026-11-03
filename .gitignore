@@ -2,3 +2,6 @@
 # compounds.db は Render 公開用に Git 管理する（更新したら commit し直すこと）
 __pycache__/
 *.pyc
+
+# スペクトル取り込み用データキャッシュ（import_spectra.py）
+backend/.spectra_cache/
