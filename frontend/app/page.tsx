@@ -325,6 +325,12 @@ function createFallbackEiMsSpectrum(peaks: EiMsPeak[]): SpectrumXY {
   };
 }
 
+// 表示名: 日本語名 -> 英語名 -> 組成式 の順で、空白表示にならないようにする
+// （PubChem 由来の一部化合物は名称自体が登録されていないため）
+function displayName(compound: Compound): string {
+  return compound.name_ja ?? compound.name_en ?? compound.formula ?? "名称未登録";
+}
+
 function CompoundCategorySection({
   allCompounds,
   sortedCategories,
@@ -391,12 +397,16 @@ function CompoundCategorySection({
                         padding: "0.45rem 0.7rem",
                       }}
                       onClick={() => {
-                        const term = compound.name_ja ?? compound.name_en ?? "";
+                        const term =
+                          compound.name_ja ??
+                          compound.name_en ??
+                          compound.formula ??
+                          "";
                         setQuery(term);
                         searchByText(term);
                       }}
                     >
-                      {compound.name_ja ?? compound.name_en}
+                      {displayName(compound)}
                     </button>
                   ))}
                 </div>
@@ -470,6 +480,15 @@ export default function Home() {
     fetchCompounds();
   }, []);
 
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const groupedCompounds = allCompounds.reduce((groups, compound) => {
     const category = compound.category || "その他";
 
@@ -504,7 +523,7 @@ export default function Home() {
   sortedCategories.forEach((category) => {
     // DB拡張分 (tier='pubchem') は name_ja が null のことがあるため、英語名で代替して落ちないようにする
     groupedCompounds[category].sort((a, b) =>
-      (a.name_ja ?? a.name_en ?? "").localeCompare(b.name_ja ?? b.name_en ?? "", "ja")
+      displayName(a).localeCompare(displayName(b), "ja")
     );
   });
 
@@ -827,7 +846,9 @@ export default function Home() {
           <div className="space-y-6">
             {results.length > 0 ? (
               results.map((compound) => {
-                const key = `${compound.name_ja}-${compound.name_en}-${compound.cas}`;
+                const key =
+                  compound.inchi_key ??
+                  `${compound.name_ja}-${compound.name_en}-${compound.cas}`;
                 const calc = calculateMol(masses[key], compound.mw);
                 const activeTab = activeTabs[key] || "IR";
 
@@ -867,7 +888,7 @@ export default function Home() {
                       <div className="flex-1">
                         <div className="flex gap-2 flex-wrap items-center mb-3">
                           <h2 className="text-2xl font-bold">
-                            {compound.name_ja}
+                            {displayName(compound)}
                           </h2>
                           <span className="border rounded px-2 py-1 text-sm bg-gray-50">
                             {getQualityLabel(compound.data_quality)}
@@ -882,7 +903,9 @@ export default function Home() {
                           )}
                         </div>
 
-                        <p className="text-lg">{compound.name_en}</p>
+                        {compound.name_ja && compound.name_en && (
+                          <p className="text-lg">{compound.name_en}</p>
+                        )}
                         <p className="text-lg">
                           IUPAC名: {displayValue(compound.iupac_name)}
                         </p>
@@ -922,7 +945,7 @@ export default function Home() {
                         {structureImageUrl ? (
                           <img
                             src={structureImageUrl}
-                            alt={`${compound.name_ja}の構造式`}
+                            alt={`${displayName(compound)}の構造式`}
                             className="border rounded bg-white p-2 object-contain"
                             style={{
                               width: "16rem",
@@ -1174,6 +1197,17 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      {showBackToTop && (
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 z-50 rounded-full bg-green-600 text-white font-bold shadow-lg hover:bg-green-700"
+          style={{ padding: "0.8rem 1.2rem" }}
+        >
+          ↑ ページ上部へ
+        </button>
+      )}
     </main>
   );
 }
