@@ -60,6 +60,8 @@ type Compound = {
   c_nmr_peaks?: CNmrPeak[];
   // スペクトル曲線が登録されている種別（APIが付与）。未登録判定に使う
   spectra_kinds?: string[];
+  // 日本語名が英語名からの自動生成（カタカナ変換）の場合 1。推定名バッジ用
+  name_ja_generated?: number | null;
 };
 
 type SpectrumTab = "IR" | "EI-MS" | "1H NMR" | "13C NMR";
@@ -896,6 +898,14 @@ export default function Home() {
                           <span className="border rounded px-2 py-1 text-sm bg-gray-50">
                             {compound.category || "その他"}
                           </span>
+                          {compound.name_ja && compound.name_ja_generated ? (
+                            <span
+                              className="border rounded px-2 py-1 text-sm bg-amber-50 text-amber-700"
+                              title="この日本語名は英語名から自動生成した推定名です"
+                            >
+                              推定名
+                            </span>
+                          ) : null}
                           {hasAnySpectrumData && (
                             <span className="border rounded px-2 py-1 text-sm bg-green-50 text-green-700">
                               スペクトル登録あり
