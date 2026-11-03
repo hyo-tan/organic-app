@@ -2,8 +2,9 @@ import json
 from pathlib import Path
 from typing import Any
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 
 BASE_DIR = Path(__file__).parent
 COMPOUNDS_PATH = BASE_DIR / "compounds.json"
@@ -27,6 +28,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# 一覧応答（約11MB）などの大きなJSONを gzip 圧縮して転送量を削減する
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
 # Phase 2: 構造式描画 API (RDKit)。rdkit 未導入の環境では検索APIだけでも動くよう任意登録にする。
 try:
     from structure import router as structure_router
@@ -44,7 +48,7 @@ except Exception as _e:  # pragma: no cover
     print(f"[warn] analysis API disabled: {_e}")
 
 
-def load_compounds() -> list[dict[str, Any]]:
+def _load_compounds_from_source() -> list[dict[str, Any]]:
     # Phase 1 (DB化): compounds.db があれば SQLite を正本にする。無ければ従来の JSON にフォールバック。
     db_path = BASE_DIR / "compounds.db"
     if db_path.exists():
@@ -61,6 +65,29 @@ def load_compounds() -> list[dict[str, Any]]:
 
     with open(COMPOUNDS_PATH, encoding="utf-8") as f:
         return json.load(f)
+
+
+_compounds_cache: list[dict[str, Any]] | None = None
+_compounds_list_cache: list[dict[str, Any]] | None = None
+
+
+def load_compounds() -> list[dict[str, Any]]:
+    # 化合物データはデプロイ時にしか変わらないため、初回読み込み後はメモリに保持する
+    global _compounds_cache
+    if _compounds_cache is None:
+        _compounds_cache = _load_compounds_from_source()
+    return _compounds_cache
+
+
+def load_compounds_for_list() -> list[dict[str, Any]]:
+    # 一覧表示用: synonyms（全体の約半分の容量）は検索API側でのみ使うため、一覧応答からは除いて軽量化する
+    global _compounds_list_cache
+    if _compounds_list_cache is None:
+        _compounds_list_cache = [
+            {k: v for k, v in compound.items() if k != "synonyms"}
+            for compound in load_compounds()
+        ]
+    return _compounds_list_cache
 
 
 def normalize_text(value: Any) -> str:
@@ -107,9 +134,16 @@ def health_check():
     }
 
 
+_compounds_list_json: str | None = None
+
+
 @app.get("/api/compounds")
 def get_compounds():
-    return load_compounds()
+    # 一覧は初回に JSON 文字列まで作って保持し、毎回のシリアライズを避ける
+    global _compounds_list_json
+    if _compounds_list_json is None:
+        _compounds_list_json = json.dumps(load_compounds_for_list(), ensure_ascii=False)
+    return Response(content=_compounds_list_json, media_type="application/json")
 
 
 @app.get("/api/search")
